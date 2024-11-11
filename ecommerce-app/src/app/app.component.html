@@ -1,0 +1,31 @@
+<div class="app-container">
+  <!-- Navigation Bar -->
+  <mat-toolbar color="primary">
+    <mat-toolbar-row>
+      <span class="brand">Kyunardo</span>
+      <span class="spacer"></span>
+      
+      <!-- Navigation Links -->
+      <nav>
+        <a mat-button routerLink="/products" routerLinkActive="active">
+          <mat-icon>store</mat-icon>
+          Products
+        </a>
+        <a mat-button routerLink="/shopping-cart" routerLinkActive="active">
+          <mat-icon>shopping_cart</mat-icon>
+          Cart
+        </a>
+      </nav>
+    </mat-toolbar-row>
+  </mat-toolbar>
+
+  <!-- Main Content -->
+  <main class="main-content">
+    <router-outlet></router-outlet>
+  </main>
+
+  <!-- Footer -->
+  <footer>
+    <p>&copy; 2024 Kyunardo.</p>
+  </footer>
+</div>
