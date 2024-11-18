@@ -1,17 +1,16 @@
-// product-list.component.ts
+// src/app/product-list/product-list.component.ts
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
-import { MatInputModule } from '@angular/material/input';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatSelectModule } from '@angular/material/select';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
 import { ProductService } from '../product.service';
+import { CartService } from '../services/cart.service';
+import { Product } from '../interfaces/product';
 
 @Component({
   selector: 'app-product-list',
@@ -19,61 +18,60 @@ import { ProductService } from '../product.service';
   imports: [
     CommonModule,
     FormsModule,
-    HttpClientModule,
     MatCardModule,
     MatButtonModule,
     MatIconModule,
-    MatInputModule,
+    MatProgressSpinnerModule,
     MatFormFieldModule,
-    MatSelectModule,
-    MatProgressSpinnerModule
+    MatInputModule
   ],
   templateUrl: './product-list.component.html',
   styleUrls: ['./product-list.component.scss']
 })
 export class ProductListComponent implements OnInit {
-  products: any[] = [];
-  loading = false;
+  products: Product[] = [];
+  filteredProducts: Product[] = [];
+  loading = true;
   error = '';
   searchText = '';
-  sortBy = 'name';
 
   constructor(
     private productService: ProductService,
-    private snackBar: MatSnackBar
-  ) { }
+    private cartService: CartService
+  ) {}
 
   ngOnInit(): void {
     this.loadProducts();
   }
 
-  loadProducts() {
-    this.loading = true;
-    this.error = '';
+  loadProducts(): void {
     this.productService.getProducts().subscribe({
-      next: (data) => {
-        this.products = data;
+      next: (products) => {
+        this.products = products;
+        this.filteredProducts = products;
         this.loading = false;
       },
       error: (error) => {
-        this.error = 'Failed to load products';
+        this.error = 'Error loading products';
         this.loading = false;
-        this.snackBar.open(this.error, 'Close', {
-          duration: 3000
-        });
-        console.error('Error loading products:', error);
+        console.error('Error:', error);
       }
     });
   }
 
-  addToCart(product: any): void {
-    // TODO: Implement add to cart logic
-    this.snackBar.open(`Added ${product.name} to cart`, 'Close', {
-      duration: 2000
-    });
+  filterProducts(): void {
+    this.filteredProducts = this.products.filter(product =>
+      product.name.toLowerCase().includes(this.searchText.toLowerCase())
+    );
   }
 
-  viewDetails(product: any): void {
-    // TODO: Implement navigation to product details
+  addToCart(product: Product): void {
+    this.cartService.addToCart({
+      id: product._id,
+      name: product.name,
+      price: product.price,
+      imageUrl: product.imageUrl,
+      quantity: 1
+    });
   }
 }

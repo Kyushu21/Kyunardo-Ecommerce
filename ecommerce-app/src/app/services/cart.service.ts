@@ -20,13 +20,29 @@ export class CartService {
   constructor() {
     // Load cart from localStorage on service initialization
     this.cartItems.subscribe(items => {
-      localStorage.setItem(this.CART_KEY, JSON.stringify(items));
+      if (this.isLocalStorageAvailable()) {
+        localStorage.setItem(this.CART_KEY, JSON.stringify(items));
+      }
     });
   }
 
+  private isLocalStorageAvailable(): boolean {
+    try {
+      const test = '__localStorage_test__';
+      localStorage.setItem(test, test);
+      localStorage.removeItem(test);
+      return true;
+    } catch (e) {
+      return false;
+    }
+  }
+
   private loadCart(): CartItem[] {
-    const savedCart = localStorage.getItem(this.CART_KEY);
-    return savedCart ? JSON.parse(savedCart) : [];
+    if (this.isLocalStorageAvailable()) {
+      const savedCart = localStorage.getItem(this.CART_KEY);
+      return savedCart ? JSON.parse(savedCart) : [];
+    }
+    return [];
   }
 
   getCartItems(): Observable<CartItem[]> {
