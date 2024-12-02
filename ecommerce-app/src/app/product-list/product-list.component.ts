@@ -10,7 +10,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { ProductService } from '../product.service';
 import { CartService } from '../services/cart.service';
-import { Product } from '../interfaces/product';
+import { Product } from '../interfaces/product'; // Asegúrate de que esta ruta sea correcta
 
 @Component({
   selector: 'app-product-list',
@@ -67,10 +67,10 @@ export class ProductListComponent implements OnInit {
 
   addToCart(product: Product): void {
     this.cartService.addToCart({
-      id: product._id,
+      id: product.id,
       name: product.name,
       price: product.price,
-      imageUrl: product.imageUrl,
+      imageUrl: product.image, // Asegúrate de que esta propiedad exista
       quantity: 1
     });
   }

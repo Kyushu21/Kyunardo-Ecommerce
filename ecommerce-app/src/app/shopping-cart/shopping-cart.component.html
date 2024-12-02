@@ -1,81 +1,81 @@
-<!-- shopping-cart.component.html -->
+<!-- src/app/shopping-cart/shopping-cart.component.html -->
 <div class="cart-container">
-    <mat-card class="cart-summary">
-      <mat-card-header>
-        <mat-card-title>
-          <mat-icon>shopping_cart</mat-icon>
-          Shopping Cart ({{cartItems.length}} items)
-        </mat-card-title>
-      </mat-card-header>
-  
-      <mat-card-content>
-        <!-- Empty cart message -->
-        <div *ngIf="cartItems.length === 0" class="empty-cart">
-          <mat-icon>remove_shopping_cart</mat-icon>
-          <p>Your cart is empty</p>
-          <button mat-raised-button color="primary" routerLink="/products">
-            Continue Shopping
-          </button>
-        </div>
-  
-        <!-- Cart items list -->
-        <div *ngIf="cartItems.length > 0" class="cart-items">
-          <mat-list>
-            <mat-list-item *ngFor="let item of cartItems">
-              <img matListItemAvatar [src]="item.imageUrl" [alt]="item.name">
-              <div matListItemTitle>{{item.name}}</div>
-              <div matListItemLine>{{item.price | currency}}</div>
-              
-              <div class="quantity-controls">
-                <button mat-icon-button (click)="decreaseQuantity(item)">
-                  <mat-icon>remove</mat-icon>
-                </button>
-                <span>{{item.quantity}}</span>
-                <button mat-icon-button (click)="increaseQuantity(item)">
-                  <mat-icon>add</mat-icon>
-                </button>
-              </div>
-  
-              <div class="item-total">
-                {{item.price * item.quantity | currency}}
-              </div>
-  
-              <button mat-icon-button color="warn" (click)="removeItem(item)">
-                <mat-icon>delete</mat-icon>
-              </button>
-  
-              <mat-divider></mat-divider>
-            </mat-list-item>
-          </mat-list>
-        </div>
-      </mat-card-content>
-  
-      <!-- Cart totals -->
-      <mat-card-actions *ngIf="cartItems.length > 0">
-        <div class="cart-totals">
-          <div class="subtotal">
-            <span>Subtotal:</span>
-            <span>{{subtotal | currency}}</span>
-          </div>
-          <div class="shipping">
-            <span>Shipping:</span>
-            <span>{{shipping | currency}}</span>
-          </div>
-          <div class="tax">
-            <span>Tax ({{taxRate}}%):</span>
-            <span>{{taxAmount | currency}}</span>
-          </div>
-          <mat-divider></mat-divider>
-          <div class="total">
-            <span>Total:</span>
-            <span>{{total | currency}}</span>
-          </div>
-        </div>
-  
-        <button mat-raised-button color="primary" class="checkout-button" (click)="checkout()">
-          <mat-icon>payment</mat-icon>
-          Proceed to Checkout
+  <mat-card class="cart-summary">
+    <mat-card-header>
+      <mat-card-title>
+        <mat-icon>shopping_cart</mat-icon>
+        Shopping Cart ({{cartItems.length}} items)
+      </mat-card-title>
+    </mat-card-header>
+
+    <mat-card-content>
+      <!-- Empty cart message -->
+      <div *ngIf="cartItems.length === 0" class="empty-cart">
+        <mat-icon>remove_shopping_cart</mat-icon>
+        <p>Your cart is empty</p>
+        <button mat-raised-button color="primary" routerLink="/products">
+          Continue Shopping
         </button>
-      </mat-card-actions>
-    </mat-card>
-  </div>
+      </div>
+
+      <!-- Cart items list -->
+      <div *ngIf="cartItems.length > 0" class="cart-items">
+        <mat-list>
+          <mat-list-item *ngFor="let item of cartItems">
+            <img matListItemAvatar [src]="'http://127.0.0.1:8000/storage/' + item.imageUrl" [alt]="item.name">
+            <div matListItemTitle>{{item.name}}</div>
+            <div matListItemLine>{{item.price | currency}}</div>
+            
+            <div class="quantity-controls">
+              <button mat-icon-button (click)="decreaseQuantity(item)">
+                <mat-icon>remove</mat-icon>
+              </button>
+              <span>{{item.quantity}}</span>
+              <button mat-icon-button (click)="increaseQuantity(item)">
+                <mat-icon>add</mat-icon>
+              </button>
+            </div>
+
+            <div class="item-total">
+              {{item.price * item.quantity | currency}}
+            </div>
+
+            <button mat-icon-button color="warn" (click)="removeItem(item)">
+              <mat-icon>delete</mat-icon>
+            </button>
+
+            <mat-divider></mat-divider>
+          </mat-list-item>
+        </mat-list>
+      </div>
+    </mat-card-content>
+
+    <!-- Cart totals -->
+    <mat-card-actions *ngIf="cartItems.length > 0">
+      <div class="cart-totals">
+        <div class="subtotal">
+          <span>Subtotal:</span>
+          <span>{{subtotal | currency}}</span>
+        </div>
+        <div class="shipping">
+          <span>Shipping:</span>
+          <span>{{shipping | currency}}</span>
+        </div>
+        <div class="tax">
+          <span>Tax ({{taxRate}}%):</span>
+          <span>{{taxAmount | currency}}</span>
+        </div>
+        <mat-divider></mat-divider>
+        <div class="total">
+          <span>Total:</span>
+          <span>{{total | currency}}</span>
+        </div>
+      </div>
+
+      <button mat-raised-button color="primary" class="checkout-button" (click)="checkout()">
+        <mat-icon>payment</mat-icon>
+        Proceed to Checkout
+      </button>
+    </mat-card-actions>
+  </mat-card>
+</div>

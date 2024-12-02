@@ -22,14 +22,14 @@
   <!-- Products grid -->
   <div class="products-grid" *ngIf="!loading && !error">
     <mat-card class="product-card" *ngFor="let product of filteredProducts">
-      <img mat-card-image [src]="product.imageUrl" [alt]="product.name">
+      <img mat-card-image [src]="'http://127.0.0.1:8000/storage/' + product.image" [alt]="product.name">
       
       <mat-card-content>
         <h2>{{ product.name }}</h2>
         <p class="description">{{ product.description }}</p>
         <p class="price">{{ product.price | currency }}</p>
         
-        <div class="rating">
+        <div class="rating" *ngIf="product.rating">
           <mat-icon [style.color]="'gold'">star</mat-icon>
           <span>{{ product.rating.rate }} ({{ product.rating.count }})</span>
         </div>

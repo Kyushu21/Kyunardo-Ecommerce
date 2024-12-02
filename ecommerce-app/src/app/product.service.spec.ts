@@ -4,24 +4,20 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 export interface Product {
-  _id: string;
+  id: number;
   name: string;
+  description?: string;
   price: number;
-  description: string;
-  imageUrl: string;
-  category: string;
-  stock: number;
-  rating: {
-    rate: number;
-    count: number;
-  };
+  image?: string;
+  created_at: string;
+  updated_at: string;
 }
 
 @Injectable({
   providedIn: 'root'
 })
 export class ProductService {
-  private apiUrl = 'http://localhost:3000/products';
+  private apiUrl = 'http://127.0.0.1:8000/api/products'; // Cambia esta URL a la de tu API
 
   constructor(private http: HttpClient) { }
 
